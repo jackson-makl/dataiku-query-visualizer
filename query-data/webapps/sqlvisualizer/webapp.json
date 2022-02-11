@@ -1,0 +1,89 @@
+// This file is the descriptor for webapp sqlvisualizer
+{
+    "meta": {
+        // label: name of the webapp as displayed, should be short
+        "label": "Query Visualizer",
+        // description: longer string to help end users understand what this webapp does
+        "description": "",
+        // icon: must be one of the FontAwesome 3.2.1 icons, complete list here at https://fontawesome.com/v3.2.1/icons/
+        "icon": "icon-search"
+    },
+
+    "baseType": "STANDARD", // WARNING: do not change
+    "hasBackend": "true",
+    "noJSSecurity": "true",
+    "standardWebAppLibraries": ["jquery","dataiku","bootstrap","d3","leaflet","nvd3","datamaps","font_awesome","topojson"],
+
+    /* The field "params" holds a list of all the params
+       for wich the user will be prompted for values in the Settings tab of the webapp.
+
+       The available parameter types include:
+       STRING, STRINGS, INT, DOUBLE, BOOLEAN, SELECT, MULTISELECT, MAP, TEXTAREA, PRESET, DATASET, DATASET_COLUMN, MANAGED_FOLDER
+
+       For the full list and for more details, see the documentation: https://doc.dataiku.com/dss/latest/plugins/reference/params.html
+    */
+    "params": [
+        {
+            "name": "data_settings_title",
+            "type": "SEPARATOR",
+            "label": "Data & Project Settings"
+        },
+        {
+            "name": "project_key",
+            "type": "STRING",
+            "label": "Project Key",
+            "description": "",
+            "mandatory": true
+        },
+        {
+            "name": "input_datasets",
+            "type": "DATASETS",
+            "label": "Datasets Allowed",
+            "description": "",
+            "mandatory": true
+        },
+        {
+            "name": "css_settings_title",
+            "type": "SEPARATOR",
+            "label": "Visual Header Settings",
+            "description": "Note: the underscores in your dataset names will be replaced with spaces in the app's header."
+        },
+        {
+            "name": "app_title",
+            "type": "STRING",
+            "label": "Title",
+            "description": "Can be plain-text or HTML icon tag using classes from 'https://getbootstrap.com/docs/3.3/components/' & using style = 'font-size: 30 !important'.",
+            "mandatory": true
+        },
+        {
+            "name": "title_color",
+            "type": "STRING",
+            "label": "Header Color",
+            "description" : "HEX code, RGBA code, or plain-text such as, 'red'.",
+            "mandatory": true
+        },
+        {
+            "name": "row_sample_title",
+            "type": "SEPARATOR",
+            "label": "Display Limit",
+            "description": "500 is the reccomended parameter. Large row limits increase time to display rows."
+        },
+        {
+            "name": "display_limit",
+            "type": "STRING",
+            "label": "Display Row Limit",
+            "mandatory": true
+        }
+    ],
+
+    /* roles define where this webapp will appear in DSS GUI. They are used to pre-fill a macro parameter with context.
+
+       Each role consists of:
+        - type: where the macro will be shown
+            * DATASET, DATASETS, SAVED_MODEL, MANAGED_FOLDER, ANALYSIS (a button to create webapps will be shown in the corresponding "action" menu)
+        - targetParamsKey(s): name of the parameter(s) that will be filled with the selected object
+    */
+    "roles": [
+        /*{"type": "DATASET", "targetParamsKey": "input_dataset"}  */
+    ]
+}

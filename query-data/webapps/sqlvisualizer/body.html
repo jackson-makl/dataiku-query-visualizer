@@ -1,0 +1,376 @@
+<body class="body" style='overflow-x: hidden; z-index: -2 !important'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js'></script>
+
+
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css'>
+<link rel="stylesheet" href="/static/public/styles/1.0.0/dku-styles.css" />
+
+<div style="border-bottom: 1px solid #dddddd; display: inline-block !important; background-color: white !important; width: 100% !important;">
+
+
+<div class = "app-body-header" id = 'page_title' style="float:left !important; font-family: SourceSansPro; z-index: 6 !important; font-size: 20px; text-align: left; display: block; width: fit-content; !imporant; !imporant; height: 50% !imporant; padding-bottom: 10px !important; padding-top:7px !important;">
+</div>
+    
+<div class = "app-body-header" id = 'page_dataset_title' style="float:left !important; color: black !important; font-family: SourceSansPro; z-index: 6 !important; font-size: 20px; text-align: left; background-color: white; display: block; width: fit-content; !imporant; !imporant; height: 50% !imporant; padding-bottom: 10px !important; padding-top:10px !important;">
+</div>
+    
+<div type = "button" class = "header-button" id = 'page_actions' onclick = 'toggleDiv("actions-nav-bar")'style="cursor: pointer !important; color: #666666 !important; float:right !important; font-family: SourceSansPro; z-index: 6 !important; font-size: 20px; text-align: left; background-color: white; display: block; width: 100% !imporant; height: 50% !imporant; padding: 10px; padding-bottom: 10px !important; padding-top:7px !important; margin-right: 5px !important; margin-right:20px !important;">
+Actions</div>  
+    
+</div>
+
+
+
+
+<div id = 'actions-nav-bar' class = 'navbar-default' style="display: none; padding-top: 10px !important; border-bottom: 1px solid #dddddd; opacity: 100% !important; background: #FFFFFF !imporant; font-family: SourceSansPro !important;z-index:50; width: 100% !important; font-size: 20px !important; width: 100% !imporant; height: 20% !imporant; padding-bottom:0px;">
+    
+                     <div class="dropdown" style='position: relative; float: left; z-index:3'>
+                    <button type="button" class="btn btn-info" id="pick-a-dataset" value = 'users_combined'><i class="glyphicon glyphicon-folder-open"></i>&nbsp; Dataset</button>
+                    <div id="columns-dropdown2" style = 'z-index: 2; border: 0px solid #dddddd; font-size: 13px;' class="dropdown-content"></div>
+                     </div>
+                         
+                    <div class="dropdown"style='position: relative; float: left; z-index:3'>
+                    <button type="button" class="btn btn-warning" id="dataset-cols-button" value = 'users_combined'><i class="glyphicon glyphicon-list"></i>&nbsp; Columns</button>
+                     <div id="columns-dropdown" style = 'z-index: 2; border: 0px solid #dddddd; font-size: 13px;' class="dropdown-content"></div>
+                     </div>
+                    <div class="dropdown"style='position: relative; float: left; z-index:3'>
+                    <button type="button" onclick="resetFilters()" class="btn btn-danger" style='background: #ffbc3c !important; border-color: #ffbc3c  !important;' id="reset-button"><i class="glyphicon glyphicon-refresh"></i>&nbsp; Reset </button>
+                    </div>
+                    <div class="dropdown"style='position: relative; float: left; z-index:3'>
+
+                        <button type="button" class="btn btn-primary" id="go-button"><i class="icon-play"></i>&nbsp; Run</button>
+                        </div> 
+                         <div class="dropdown"style='position: relative; float: left; top: -6px;'>
+
+                 <img type="button" src="/plugins/query-data/resource/sql_recipe_icon.png" style= "cursor: pointer;" width="43" height="40" id="write-sql" name="write-sql" onclick = "showHideBox()" value = 'false' ></img>
+                    </div>
+    
+</div>    
+<section>
+<div class="code-container" id = 'sql-contain' style="border-radius: 0px !important; font-size: 15 !important; box-shadow: none; width: auto; max-width: 600px; height: 25px;border: 1px solid #dddddd; padding-bottom: 30px !important; left: 12px; top: 10px; margin-top: -9px; margin-bottom: -.2px;">
+<textarea type = 'text' id='code' style = 'border-radius: 0px !important; padding-bottom: 33px !important;'></textarea>
+</div>
+<iframe id="code_result" width="100%" height="500px" style="display: none;">
+</iframe>
+</section>
+
+                          
+                 <textarea class="text-box" style="float:left; max-width: 775 !important; display: none !important; margin-bottom:20px;" type="text" id="new-query" ></textarea>
+<div id = 'schema-container' class = 'navbar navbar-default' style='overflow: scroll !important; visibility: hidden; min-width: 100 !important; width: auto !important; border: 1px solid #dddddd; margin-left: 10 !important; margin-right: 10 !important; padding = 30px !important; text-align: center !important; position: absolute !important; left: 90% !important; ' >
+<label class = 'navbar navbar-default' style ='overflow: scroll; background-color: white; min-width: 97 !important;  width: auto !important;  border: 0px solid black; margin-top: 0; padding-top: 20 !important;'>Schema List</label>
+</div>
+
+<label for="space">&nbsp;</label>
+              
+
+
+
+
+
+
+<div style='display: inline; position: relative;'>
+<i class="glyphicon glyphicon-search" style = "position:absolute; margin-left: 20px; color: #bababa !important;"></i>
+<input id="live_search_input" class="input-icons" type="text" style="margin: 10px !important; margin-left: 14px !important; border-radius: 0px !important; padding-left: 30px; border: 1px solid #dddddd;" ></input>
+</div>
+
+<div id='data-container-2' style = 'margin-left: 1% !important; width: 98%; overflow-x: scroll; overflow-y: scroll; border-radius: 0px;  border: 1px solid #dddddd; background-color: white !important;'>
+</div>
+<div id='error_message'>
+<i id = 'error_pic' class = "glyphicon glyphicon-folder-open" style = 'z-index: -1 !important; text-align: center; font-size: 50; color: #666666; display: inline; position: absolute; left: 50%; top: 380px;'> </i>
+<!-- <i id = 'error_pic' class = "glyphicon glyphicon-folder-open" style = 'z-index: -1 !important; text-align: center; font-size: 50; color: #666666; display: inline; position: absolute; left: 640px; top: 380px;'> </i> -->
+<!-- <div id = 'error_message' style = 'text-align: center; font-size: 30px; color: #666666; z-index: -1 !important; display: inline; position: absolute; left: 710px; top: 400px;'>Choose a dataset from the list.</div>    
+ -->
+</div>
+</body>
+<script>
+$(document).ready(function() {
+$("#live_search_input").on("keyup", function() {
+var value = $(this).val().toLowerCase();
+$("#jsonTable tr").filter( function() {
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+});
+});
+});
+</script>
+
+<!-- The Modal -->
+<div id="myModal" class="modal" style="position:absolute; list-style: none; width: 475px !important; box-shadow: 0px !important; margin-left: 131px;top:24px" >
+
+<!-- Modal content -->
+<div class="modal-content" stlye="box-shadow: 0px !important; position: absolute; z-index:1;">
+    
+<span class="close" style = "display: none;">&times;</span>
+    <div style = "box-shadow: 0px !important; display: block; position: relative; text-align:center; font-size: 20 z-index: 5 !important; opacity:90% !important; border-radius: 0px !important;">
+<!--     <div class = 'header' style= 'float:top; height:20% width:100%; margin-top: 0; padding-top: 20px; margin-left:0; font-size: 25px; background-color: white; font-color: rgb(60, 60, 60); border-bottom: 2px solid #dddddd; display: block; text-align: center; content-align:center;position:relative;'><i class="glyphicon glyphicon-filter" style="content-align:center; float:left; padding-left:30px font-family: SourceSansPro;">Filter</i>&nbsp;</div> -->
+        <div style = "list-style: none; width: 100%; background-color: white; padding-top: 7px !important;padding-left:15px; padding-bottom:2px !important; display: inline; float:left; ">
+       <div style='float:left; font-family: SourceSansPro; font-weight: 200 !important;font-size: 11px !important; color: #9d9d9d' >
+           
+<!--             <i class='glyphicon glyphicon-filter' style='float:left; color: #9d9d9d; font-size: 11px !important;'></i>&nbsp; Filters</div> -->
+        </div>
+<!--         <br></br> -->
+        
+    <div id = 'num-filter-function' style = "display: inline-block; margin-right: 85px;height:60px;">
+    <text style = 'position: absolute; margin-right 39px; font-size: 10px; opacity: 60%;'>&nbsp;Range: &nbsp;</text> 
+    <input id='num-low' style="position: absolute;align-content:center; margin-top: 20px; border: 1px solid #dddddd; width: 30px; color: black; align-text: center !important; font-family: SourceSansPro; font-size: 10px; padding: 1%;padding-left: 1%;padding-right: 1%; border-radius:0px !important;"></input>
+    <text style = 'z-index: 45; position: absolute; right: 86px; top: 28px; font-size: 10px; opacity: 60%;'>-&nbsp;</text> 
+    <input id='num-high' style="margin-left: 40px; position: absolute; align-content:center; margin-top: 20px; border: 1px solid #dddddd; width: 30px; color: black; align-text: center !important; font-family: SourceSansPro; font-size: 10px; padding: 1%;padding-left: 1%;padding-right: 1%; border-radius:0px !important;"></input>
+<!--     <button type="button" onclick = "filterRange()" class="btn btn-danger" id="filter-input-button"style='margin-right: -58px !important; margin-top:20px; float: right !important; font-size: 10px;  width:20px !important; height:20px !important; text-align: center; border-radius:50% !important;background-color: #3b99fc !important;'><i class="glyphicon glyphicon-filter" style='right: 4.5px !important; top: 0px !important; padding-bottom: 4px !important; color: white !important;'></i></button> -->
+    <i type="button" onclick = "filterRange()" class="glyphicon glyphicon-filter" id="filter-input-button" style = 'cursor: pointer; color: #3b99fc; font-size: 13px !important; left: 77px; top: 23px;' > </i>
+    </div> 
+    <div id = 'string-filter-function' style = 'display: inline-block; margin-top: 10px !important; border: 0px !important;'>
+    <input id='filter-input' style="position: absolute; font-size: 10px; margin-right: 300px !important; margin-top: 20px; border: 1px solid #dddddd; width: 100px; padding: 1%;padding-bottom: 1%;padding-left: 1%;padding-right: 0%; color: black; border-radius:0px !important; margin-left: -60px; margin-top: -1px !important;"></input>
+    <i type="button" onclick = "filterInput()" class="glyphicon glyphicon-filter" id="filter-input-button" style = 'cursor: pointer; color: #3b99fc; font-size: 13px !important; left: 45px; bottom: 10px;' > </i>
+
+    </div>
+
+
+    <div id = 'show-list-filter-items-container' style=" margin-right: 0px; right:-1px !important; bottom: -1px !important; top 20px; left: 25px; padding-bottom:50px; border-bottom: 0px solid #dddddd !important; border-right: 0px solid #dddddd !important; width:100% !important;">
+    <text style = "color: #9d9d9d; font-size: 10px; margin-top: 25px; margin-left: 25px; float:left; content-align: center; text-align: center;"><text style = 'position: absolute; left: 30px; padding-top: 5px; border-color: #9d9d9d;'>Display Values: &nbsp;&nbsp;&nbsp;</text><input type="checkbox" id="show-list-filter-items" onclick = "showFilterList()" style = "height: 9px !important; width: 9px !important; float:right; position:absolute; margin-top: 8px;margin-left: 55px; border-radius:0px !important; border: 0px solid #9d9d9d !important; box-shadow: 0px !important "></text>
+    </div>
+<!--     <br></br> -->
+    <div></div>
+
+
+</div>
+    <vr></vr>
+<center>
+<p id = "filter-item-container2" class = "filter-item-container" style= "font-size: 10px; background-color: white !important; align-content: center; display: none; padding: 0%; padding-top: 1px; border-top: 0px solid #dddddd !important; border-top: 0px solid #dddddd !important; border-left: 1px solid #dddddd !important; border-right: 0px solid #dddddd !important; border-bottom: 0px solid #dddddd !important; width: 100%; align-content: center; z-index:6 !important">
+<div id = "filter-item-container" class = "filter-item-container" style= "font-size: 10px; background-color: white !important; max-height: 100px !important; overflow: scroll !important; align-content: center; display: none; padding: 0%; padding-top: 1px; border-top: 0px solid #dddddd !important; border-left: 0px solid #dddddd !important; border-right: 0px solid #dddddd !important; border-bottom: 0px solid #dddddd !important; width: 100%; align-content: center !important; width: 130px;">
+    </div>
+
+
+    </p>
+</center>
+    
+
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/xml/xml.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/sql/sql.js'></script>
+<script id="rendered-js" >
+    
+var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    styleActiveLine: true,
+    lineNumbers: true,
+    matchBrackets: true,
+    autoCloseBrackets: true,
+    autoCloseTags: true,
+    mode: "text/x-mysql",
+});
+editor.setValue(sessionStorage.getItem('newQuery'));
+</script>
+
+<script>
+document.getElementById("sql-contain").style.display = "none"
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+     
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    document.getElementById('show-list-filter-items-container').style.display = 'block';
+    document.getElementById("filter-item-container").innerHTML = ""
+    modal.style.display = "none";
+    document.getElementById("filter-item-container").style.display = 'none'
+    document.getElementById('num-filter-function').style.display = 'block'
+  }
+}
+    
+function showFilterList(){
+    if (document.getElementById('show-list-filter-items').checked){
+    document.getElementById("filter-item-container").style.display = 'inline-block';
+}else{
+    document.getElementById("filter-item-container").style.display = 'none';
+}
+}
+    
+    
+function insertSelect(key){
+        document.getElementById('show-list-filter-items-container').style.display = 'none';
+        let dataset_name = sessionStorage.getItem('dataset-name');
+        let newQuery = sessionStorage.getItem('newQuery');
+        let endpoint = sessionStorage.getItem('endpoint');
+        if (document.getElementById("new-query").innerHTML.includes('SELECT')){
+    
+        }else{
+         document.getElementById("new-query").innerHTML += "SELECT * FROM "+dataset_name;
+        }
+        $.getJSON(getWebAppBackendUrl(endpoint), function(data) {
+        console.log('Received data from backend', data)
+        let keyString = '"' + key + '"'
+        let filterArray = []
+        var col2filter = key;
+        
+        sessionStorage.setItem('col2filter',key);
+            
+        var validNumber = new RegExp(/^\d*\.?\d*$/);
+        if (validNumber.test(data[0][key])){
+            document.getElementById('show-list-filter-items-container').style.display = 'none';
+            document.getElementById('num-filter-function').style.display = 'block';
+            document.getElementById('string-filter-function').style.display = 'none';
+        };
+        if(validNumber.test(data[0][key]) == false){
+            document.getElementById('show-list-filter-items-container').style.display = 'block';
+            document.getElementById('num-filter-function').style.display = 'none';
+            document.getElementById('string-filter-function').style.display = 'block';
+        }
+            
+        for (x in data){
+        if(validNumber.test(data[0][key])){
+        break;
+        }
+        if (filterArray.includes(data[x][key])){continue;}
+        filterArray.push(data[x][key])
+        let keyString = '"' + key + "_SEPARATOR_" + data[x][key] + '"'
+        document.getElementById("filter-item-container").innerHTML += '<i class="glyphicon glyphicon-filter" style="float: left; z-index:4 !important; font-size: 80%; color: #3b99fc; padding-right: 5px; top: 10px;" ></i>' + "<text class = 'menu-item' onclick='fix(" + keyString +")' style = 'cursor: pointer; float:left; display: block; width:100%; border-bottom: 1px solid #dddddd; position: relative; text-align:center; z-index: 3 !important;opacity:100% !important; background-color: white !important; overflow: hidden !important; padding-left: 10px; padding-bottom: 5px; '>" + data[x][key] + "</text>"
+        }
+        document.getElementById("myModal").style.display = "block";
+        } );
+    
+    
+    }
+
+function showHideBox() {
+  var x = document.getElementById("sql-contain");
+  if (x.style.display == "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+
+    }
+function fix(key){
+    
+    let x = key.split("_SEPARATOR_")
+    
+    let item = x[1]
+    let col = "["+ x[0] + "]";
+    
+    let icon_id = String(col).replace('[','').replace(']','')+'_filter_icon';
+    document.getElementById(icon_id).style.display = 'inline';
+    try{
+        var old_list = String(sessionStorage.getItem('icon_id_list'));
+    }catch{
+        var old_list = "";
+        }
+        
+    let appended_icon_id_list = icon_id + "," + old_list;
+    
+    sessionStorage.setItem('icon_id_list', appended_icon_id_list)
+    if (document.getElementById("new-query").innerHTML.includes(col)){
+    document.getElementById("new-query").innerHTML += " OR " + col + " LIKE " + "'" + item + "'"
+    }
+    else if (document.getElementById("new-query").innerHTML.includes('WHERE')){
+    document.getElementById("new-query").innerHTML += " AND " + col + " LIKE " + "'" + item + "'"
+    }
+    else{
+    document.getElementById("new-query").innerHTML += " WHERE " + col + " LIKE " + "'" + item + "'"
+    }
+    
+    document.getElementById("filter-item-container").innerHTML = ""
+    modal.style.display = "none";
+    sessionStorage.setItem('newQuery', document.getElementById("new-query").innerHTML)
+    editor.setValue(sessionStorage.getItem('newQuery'));
+    document.getElementById('num-filter-function').style.display = 'block'
+    }
+    
+function filterRange(){
+    let lower = document.getElementById("num-low").value;
+    let upper = document.getElementById("num-high").value;
+    let col2filter = sessionStorage.getItem('col2filter');
+    let icon_id = String(col2filter)+'_filter_icon'
+    document.getElementById(icon_id).style.display = 'inline';
+    try{
+        var old_list = String(sessionStorage.getItem('icon_id_list'));
+    }catch{
+        var old_list = "";
+        }
+        
+    let appended_icon_id_list = icon_id + "," + old_list;
+    
+    sessionStorage.setItem('icon_id_list', appended_icon_id_list)
+    let newquery = " AND [" + col2filter + "] BETWEEN " + lower + " AND " + upper
+    let newquery2 = " WHERE [" + col2filter + "] BETWEEN " + lower + " AND " + upper
+    
+    if (document.getElementById("new-query").innerHTML.includes("WHERE")){document.getElementById("new-query").innerHTML += newquery;}
+    else{document.getElementById("new-query").innerHTML += newquery2;}
+    
+    sessionStorage.setItem('newQuery',document.getElementById("new-query").innerHTML);
+    modal.style.display = "none";
+    document.getElementById("num-low").value = "";
+    document.getElementById("num-high").value = "";
+    sessionStorage.setItem('newQuery', document.getElementById("new-query").innerHTML)
+    editor.setValue(sessionStorage.getItem('newQuery'));
+    }
+function resetFilters(){
+    let dataset_name = sessionStorage.getItem('dataset-name');
+    document.getElementById("new-query").innerHTML = 'SELECT * FROM '+dataset_name;
+    sessionStorage.setItem('newQuery',"SELECT * FROM user_hours");
+    document.getElementById('go-button').click()
+    }
+function filterInput(){
+    document.getElementById('show-list-filter-items-container').style.display = 'block';
+    var filter_item = document.getElementById('filter-input').value;
+    var col2filter = sessionStorage.getItem('col2filter');
+    let icon_id = String(col2filter)+'_filter_icon'
+    document.getElementById(icon_id).style.display = 'inline';
+    
+    try{
+        var old_list = String(sessionStorage.getItem('icon_id_list'));
+    }catch{
+        var old_list = "";
+        }
+        
+    let appended_icon_id_list = icon_id + "," + old_list;
+    
+    sessionStorage.setItem('icon_id_list', appended_icon_id_list)
+    if (filter_item.includes("%") == false){
+    var newquery2 = " WHERE [" + col2filter + "] IS '"+filter_item.trim()+"'";
+    var newquery = " AND [" + col2filter + "] IS '"+filter_item.trim()+"'";
+    var newquery3 = " OR [" + col2filter + "] IS '"+filter_item.trim()+"'";  
+    }else{    
+    var newquery2 = " WHERE [" + col2filter + "] LIKE '"+filter_item.trim()+"'";
+    var newquery = " AND [" + col2filter + "] LIKE '"+filter_item.trim()+"'";
+    var newquery3 = " OR [" + col2filter + "] LIKE '"+filter_item.trim()+"'";}
+    if (document.getElementById("new-query").innerHTML.includes("["+col2filter+"]")){document.getElementById("new-query").innerHTML += newquery3;}
+    else 
+    if (document.getElementById("new-query").innerHTML.includes("WHERE")){document.getElementById("new-query").innerHTML += newquery;}
+    else{document.getElementById("new-query").innerHTML += newquery2;}
+    
+    sessionStorage.setItem('newQuery',document.getElementById("new-query").innerHTML);
+    modal.style.display = "none";
+    document.getElementById('filter-input').value = "";
+    sessionStorage.setItem('newQuery', document.getElementById("new-query").innerHTML)
+    editor.setValue(sessionStorage.getItem('newQuery'));
+    
+    }
+function setDataset(key){
+    sessionStorage.setItem('dataset-name',key);
+    document.getElementById('reset-button').click()
+}
+//     editor.value = document.getElementById("new-query").innerHTML;
+// setValue(document.getElementById("new-query").innerHTML);
+
+function toggleDiv(id) {
+    var div = document.getElementById(id);
+    div.style.display = div.style.display == "none" ? "inline-block" : "none";
+    modal.style.display = "none";
+}
+
+</script>
+
+
+

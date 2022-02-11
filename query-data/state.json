@@ -1,0 +1,15 @@
+{
+  "actions": [
+    {
+      "ts": 1644472004059,
+      "action": "INSTALL",
+      "user": "admin"
+    }
+  ],
+  "gitState": {
+    "enabled": true,
+    "repository": "https://github.com/jackson-makl/dataiku-sql-query-visualizer-plugin.git",
+    "path": "",
+    "checkout": "refs/heads/main"
+  }
+}
